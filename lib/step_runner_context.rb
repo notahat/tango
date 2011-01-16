@@ -3,7 +3,7 @@ class StepRunnerContext
     @step = step
   end
 
-  def run(step_name)
-    @step.dance.run(step_name)
+  def run(step_name, options = {})
+    @step.dance.run(step_name, options)
   end
 end

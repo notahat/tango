@@ -15,8 +15,8 @@ class Dance
     @steps[name] = step
   end
 
-  def run(step_name)
+  def run(step_name, options = {})
     raise UndefinedStepError, "Step #{step_name} not defined" unless @steps.has_key?(step_name)
-    @steps[step_name].run
+    @steps[step_name].run(options)
   end
 end
