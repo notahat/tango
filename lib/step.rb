@@ -1,13 +1,15 @@
 require 'step_builder'
+require 'step_runner'
 
 class Step
   def initialize(&block)
     StepBuilder.new(self).instance_eval(&block)
   end
 
-  attr_accessor :met_block, :meet_block
+  attr_accessor :dance, :met_block, :meet_block
 
   def run
+    @runner = StepRunner.new(self)
     if met_block
       run_with_met_block
     else
@@ -16,11 +18,11 @@ class Step
   end
 
   def met?
-    met_block.call
+    @runner.instance_eval(&met_block)
   end
 
   def meet
-    meet_block.call
+    @runner.instance_eval(&meet_block)
   end
 
 private

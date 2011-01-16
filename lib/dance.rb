@@ -7,6 +7,7 @@ class Dance
   end
 
   def define_step(name, step)
+    step.dance   = self
     @steps[name] = step
   end
 
