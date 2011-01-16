@@ -15,20 +15,6 @@ describe Dance do
     step_run.should be_true
   end
 
-  it "should pass options to a step when running" do
-    step_options = { :example => "example" }
-
-    dance = Dance.new do
-      step "example step" do
-        meet do |options|
-          options.should == step_options
-        end
-      end
-    end
-
-    dance.run "example step", step_options
-  end
-
   it "should run one step from within another" do
     inner_step_run = false
 
@@ -46,37 +32,53 @@ describe Dance do
     inner_step_run.should be_true
   end
 
-  it "should pass options when running other steps" do
-    step_options = { :example => "example" }
+  context "option passing" do
+    it "should pass options to a step when running" do
+      step_options = { :example => "example" }
 
-    dance = Dance.new do
-      step "outer step" do
-        meet { run "inner step", step_options }
+      dance = Dance.new do
+        step "example step" do
+          meet {|options| options.should == step_options }
+        end
       end
 
-      step "inner step" do 
-        meet {|options| options.should == step_options }
-      end
+      dance.run "example step", step_options
     end
 
-    dance.run "outer step"
-  end
+    it "should pass options when running other steps" do
+      step_options = { :example => "example" }
 
-  it "should raise an error on an attempt to redefine a step" do
-    expect do
-      Dance.new do
-        step "example step" do; end
-        step "example step" do; end
+      dance = Dance.new do
+        step "outer step" do
+          meet { run "inner step", step_options }
+        end
+
+        step "inner step" do 
+          meet {|options| options.should == step_options }
+        end
       end
-    end.should raise_error(Dance::StepAlreadyDefinedError)
+
+      dance.run "outer step"
+    end
   end
 
-  it "should raise an error on an attempt to run an undefined step" do
-    dance = Dance.new do; end
+  context "error handling" do
+    it "should raise an error on an attempt to redefine a step" do
+      expect do
+        Dance.new do
+          step "example step" do; end
+          step "example step" do; end
+        end
+      end.should raise_error(Dance::StepAlreadyDefinedError)
+    end
 
-    expect do
-      dance.run "undefined step"
-    end.should raise_error(Dance::UndefinedStepError)
+    it "should raise an error on an attempt to run an undefined step" do
+      dance = Dance.new do; end
+
+      expect do
+        dance.run "undefined step"
+      end.should raise_error(Dance::UndefinedStepError)
+    end
   end
 
 end

@@ -65,7 +65,7 @@ describe Step do
 
   context "run with options" do
     it "should pass the options to the met block" do
-      step_options = { :example_option => "example value" }
+      step_options = { :example => "example" }
 
       step = Step.new do
         met? do |options|
@@ -78,12 +78,10 @@ describe Step do
     end
 
     it "should pass the options to the meet block" do
-      step_options = { :example_option => "example value" }
+      step_options = { :example => "example" }
 
       step = Step.new do
-        meet do |options|
-          options.should == step_options
-        end
+        meet {|options| options.should == step_options }
       end
 
       step.run(step_options)
