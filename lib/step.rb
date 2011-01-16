@@ -1,8 +1,8 @@
-require 'dep_builder'
+require 'step_builder'
 
-class Dep
+class Step
   def initialize(&block)
-    DepBuilder.new(self).instance_eval(&block)
+    StepBuilder.new(self).instance_eval(&block)
   end
 
   attr_accessor :met_block, :meet_block
