@@ -8,7 +8,7 @@ class Step
 
   attr_accessor :dance, :met_block, :meet_block
 
-  def run
-    StepRunner.new(self).run
+  def run(options = {})
+    StepRunner.new(self, options).run
   end
 end

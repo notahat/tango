@@ -19,12 +19,12 @@ describe Dance do
     inner_step_run = false
 
     dance = Dance.new do
-      step "inner step" do
-        meet { inner_step_run = true }
-      end
-
       step "outer step" do
         meet { run "inner step" }
+      end
+
+      step "inner step" do
+        meet { inner_step_run = true }
       end
     end
 

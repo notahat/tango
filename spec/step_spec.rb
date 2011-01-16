@@ -62,4 +62,32 @@ describe Step do
       meet_block_calls.should == 1
     end
   end
+
+  context "run with options" do
+    it "should pass the options to the met block" do
+      step_options = { :example_option => "example value" }
+
+      step = Step.new do
+        met? do |options|
+          options.should == step_options
+          true
+        end
+      end
+
+      step.run(step_options)
+    end
+
+    it "should pass the options to the meet block" do
+      step_options = { :example_option => "example value" }
+
+      step = Step.new do
+        meet do |options|
+          options.should == step_options
+        end
+      end
+
+      step.run(step_options)
+    end
+  end
+
 end

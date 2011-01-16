@@ -1,8 +1,9 @@
 require 'step_runner_context'
 
 class StepRunner
-  def initialize(step)
+  def initialize(step, options)
     @step    = step
+    @options = options
     @context = StepRunnerContext.new(@step)
   end
 
@@ -28,11 +29,11 @@ private
   end
 
   def met?
-    @context.instance_eval(&@step.met_block)
+    @context.instance_exec(@options, &@step.met_block)
   end
 
   def meet
-    @context.instance_eval(&@step.meet_block)
+    @context.instance_exec(@options, &@step.meet_block)
   end
 
 end
