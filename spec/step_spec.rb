@@ -90,6 +90,18 @@ module Tango
 
         step.run(1, 2)
       end
+
+      it "should capture arguments in the met? and meet blocks" do
+        step = Step.new do |argument|
+          met? do
+            argument.should == 1
+            false
+          end
+          meet { argument.should == 1 }
+        end
+
+        expect { step.run(1) }.should raise_error(CouldNotMeetError)
+      end
     end
 
   end
