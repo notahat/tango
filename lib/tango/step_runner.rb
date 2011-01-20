@@ -1,8 +1,8 @@
 module Tango
   class StepRunner
 
-    def initialize(step)
-      @step = step
+    def initialize(dance = nil)
+      @dance = dance
     end
 
     def met?(&met_block)
@@ -18,7 +18,7 @@ module Tango
     end
 
     def run(step_name, *args)
-      @step.dance.run(step_name, *args)
+      @dance.run(step_name, *args)
     end
 
   end

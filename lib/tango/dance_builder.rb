@@ -6,7 +6,7 @@ module Tango
     end
 
     def step(name, &block)
-      @dance.define_step(name, Step.new(&block))
+      @dance.define_step(name, &block)
     end
 
   end
