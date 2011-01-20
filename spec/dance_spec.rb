@@ -68,7 +68,7 @@ module Tango
             step "example step" do; end
             step "example step" do; end
           end
-        end.should raise_error(Dance::StepAlreadyDefinedError)
+        end.should raise_error(StepAlreadyDefinedError)
       end
 
       it "should raise an error on an attempt to run an undefined step" do
@@ -76,7 +76,7 @@ module Tango
 
         expect do
           dance.run "undefined step"
-        end.should raise_error(Dance::UndefinedStepError)
+        end.should raise_error(UndefinedStepError)
       end
     end
 

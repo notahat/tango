@@ -1,9 +1,6 @@
 module Tango
   class Dance
 
-    class StepAlreadyDefinedError < RuntimeError; end
-    class UndefinedStepError < RuntimeError; end
-
     def initialize(&block)
       @steps = {}
       DanceBuilder.new(self).instance_eval(&block)

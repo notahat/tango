@@ -59,9 +59,17 @@ module Tango
           meet { meet_block_calls += 1 }
         end
 
-        expect { step.run }.should raise_error
+        expect { step.run }.should raise_error(CouldNotMeetError)
         met_block_calls.should  == 2
         meet_block_calls.should == 1
+      end
+
+      it "should raise an error if there's a meet block without a met block" do
+        step = Step.new do
+          meet { }
+        end
+
+        expect { step.run }.should raise_error(MeetWithoutMetError)
       end
     end
 

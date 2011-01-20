@@ -10,9 +10,10 @@ module Tango
     end
 
     def meet(&meet_block)
+      raise MeetWithoutMetError if @met_block.nil?
       unless instance_eval(&@met_block)
         instance_eval(&meet_block)
-        raise "Couldn't meet" unless instance_eval(&@met_block)
+        raise CouldNotMeetError unless instance_eval(&@met_block)
       end
     end
 
