@@ -1,4 +1,6 @@
 module Tango
+  # A step's block is instance_execed against one of these. It provides all the
+  # methods accessible from within the step.
   class StepRunner
 
     def initialize(dance = nil)
