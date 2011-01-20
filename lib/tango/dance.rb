@@ -3,17 +3,18 @@ module Tango
 
     def initialize(&block)
       @steps = {}
-      DanceBuilder.new(self).instance_eval(&block)
+      instance_eval(&block)
     end
 
-    def define_step(name, &block)
+    def step(name, &block)
       raise StepAlreadyDefinedError, "Step #{name} already defined" if @steps.has_key?(name)
       @steps[name] = block
     end
 
     def run(step_name, *args)
-      raise UndefinedStepError, "Step #{step_name} not defined" unless @steps.has_key?(step_name)
-      StepRunner.new(self).instance_exec(*args, &@steps[step_name])
+      step = @steps[step_name]
+      raise UndefinedStepError, "Step #{step_name} not defined" if step.nil?
+      StepRunner.new(self).instance_exec(*args, &step)
     end
 
   end
