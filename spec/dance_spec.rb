@@ -33,29 +33,27 @@ module Tango
       inner_step_run.should be_true
     end
 
-    context "option passing" do
-      it "should pass options to a step when running" do
-        step_options = { :example => "example" }
-
+    context "passing arguments" do
+      it "should pass arguments to a step" do
         dance = Dance.new do
-          step "example step" do |options|
-            options.should == step_options
+          step "example step" do |a, b|
+            a.should == 1
+            b.should == 2
           end
         end
 
-        dance.run "example step", step_options
+        dance.run "example step", 1, 2
       end
 
-      it "should pass options when running other steps" do
-        step_options = { :example => "example" }
-
+      it "should pass arguments when running other steps" do
         dance = Dance.new do
           step "outer step" do
-            run "inner step", step_options
+            run "inner step", 1, 2
           end
 
-          step "inner step" do |options|
-            options.should == step_options
+          step "inner step" do |a, b|
+            a.should == 1
+            b.should == 2
           end
         end
 

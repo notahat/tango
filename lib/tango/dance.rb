@@ -15,9 +15,9 @@ module Tango
       @steps[name] = step
     end
 
-    def run(step_name, options = {})
+    def run(step_name, *args)
       raise UndefinedStepError, "Step #{step_name} not defined" unless @steps.has_key?(step_name)
-      @steps[step_name].run(options)
+      @steps[step_name].run(*args)
     end
 
   end

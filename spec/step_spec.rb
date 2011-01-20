@@ -65,14 +65,23 @@ module Tango
       end
     end
 
-    it "should pass the options to the step" do
-      step_options = { :example => "example" }
+    context "step arguments" do
+      it "should pass a single argument to the step" do
+        step = Step.new do |a|
+          a.should == 1
+        end
 
-      step = Step.new do |options|
-        options.should == step_options
+        step.run(1)
       end
 
-      step.run(step_options)
+      it "should pass multiple arguments to the step" do
+        step = Step.new do |a, b|
+          a.should == 1
+          b.should == 2
+        end
+
+        step.run(1, 2)
+      end
     end
 
   end

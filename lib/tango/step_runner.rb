@@ -16,8 +16,8 @@ module Tango
       end
     end
 
-    def run(step_name, options = {})
-      @step.dance.run(step_name, options)
+    def run(step_name, *args)
+      @step.dance.run(step_name, *args)
     end
 
   end

@@ -7,8 +7,8 @@ module Tango
     attr_accessor :dance
     attr_reader :block
 
-    def run(options = {})
-      StepRunner.new(self).instance_exec(options, &block)
+    def run(*args)
+      StepRunner.new(self).instance_exec(*args, &block)
     end
   end
 end
