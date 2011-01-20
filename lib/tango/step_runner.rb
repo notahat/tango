@@ -1,39 +1,23 @@
 module Tango
   class StepRunner
 
-    def initialize(step, options)
-      @step    = step
-      @options = options
-      @context = StepRunnerContext.new(@step)
+    def initialize(step)
+      @step = step
     end
 
-    def run
-      if @step.met_block
-        run_with_met_block
-      else
-        run_without_met_block
+    def met?(&met_block)
+      @met_block = met_block
+    end
+
+    def meet(&meet_block)
+      unless instance_eval(&@met_block)
+        instance_eval(&meet_block)
+        raise "Couldn't meet" unless instance_eval(&@met_block)
       end
     end
 
-  private
-
-    def run_with_met_block
-      unless met?
-        meet
-        raise "Couldn't meet" unless met?
-      end
-    end
-
-    def run_without_met_block
-      meet
-    end
-
-    def met?
-      @context.instance_exec(@options, &@step.met_block)
-    end
-
-    def meet
-      @context.instance_exec(@options, &@step.meet_block)
+    def run(step_name, options = {})
+      @step.dance.run(step_name, options)
     end
 
   end

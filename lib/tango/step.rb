@@ -1,13 +1,14 @@
 module Tango
   class Step
     def initialize(&block)
-      StepBuilder.new(self).instance_eval(&block)
+      @block = block
     end
 
-    attr_accessor :dance, :met_block, :meet_block
+    attr_accessor :dance
+    attr_reader :block
 
     def run(options = {})
-      StepRunner.new(self, options).run
+      StepRunner.new(self).instance_exec(options, &block)
     end
   end
 end

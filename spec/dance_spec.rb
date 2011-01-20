@@ -8,7 +8,7 @@ module Tango
 
       dance = Dance.new do
         step "example step" do
-          meet { step_run = true }
+          step_run = true
         end
       end
 
@@ -21,11 +21,11 @@ module Tango
 
       dance = Dance.new do
         step "outer step" do
-          meet { run "inner step" }
+          run "inner step"
         end
 
         step "inner step" do
-          meet { inner_step_run = true }
+          inner_step_run = true
         end
       end
 
@@ -38,8 +38,8 @@ module Tango
         step_options = { :example => "example" }
 
         dance = Dance.new do
-          step "example step" do
-            meet {|options| options.should == step_options }
+          step "example step" do |options|
+            options.should == step_options
           end
         end
 
@@ -51,11 +51,11 @@ module Tango
 
         dance = Dance.new do
           step "outer step" do
-            meet { run "inner step", step_options }
+            run "inner step", step_options
           end
 
-          step "inner step" do 
-            meet {|options| options.should == step_options }
+          step "inner step" do |options|
+            options.should == step_options
           end
         end
 

@@ -3,15 +3,15 @@ require 'tango'
 module Tango
   describe Step do
 
-    context "with just a meet block" do
-      it "should run the meet block" do
-        meet_block_calls = 0
+    context "with just a plain block" do
+      it "should run the block" do
+        block_calls = 0
         step = Step.new do
-          meet { meet_block_calls += 1 }
+          block_calls += 1
         end
 
         step.run
-        meet_block_calls.should == 1
+        block_calls.should == 1
       end
     end
 
@@ -65,29 +65,14 @@ module Tango
       end
     end
 
-    context "run with options" do
-      it "should pass the options to the met block" do
-        step_options = { :example => "example" }
+    it "should pass the options to the step" do
+      step_options = { :example => "example" }
 
-        step = Step.new do
-          met? do |options|
-            options.should == step_options
-            true
-          end
-        end
-
-        step.run(step_options)
+      step = Step.new do |options|
+        options.should == step_options
       end
 
-      it "should pass the options to the meet block" do
-        step_options = { :example => "example" }
-
-        step = Step.new do
-          meet {|options| options.should == step_options }
-        end
-
-        step.run(step_options)
-      end
+      step.run(step_options)
     end
 
   end
