@@ -1,6 +1,10 @@
 module Tango
   class DanceCard
 
+    def self.instance
+      @dance_card ||= DanceCard.new
+    end
+
     def initialize
       @dances = {}
     end
