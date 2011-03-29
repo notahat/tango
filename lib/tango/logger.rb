@@ -1,6 +1,9 @@
 module Tango
   class Logger
- 
+    def self.instance
+      @logger ||= Logger.new
+    end
+
     def initialize(io = STDERR)
       @io = io
       @depth = 0

@@ -1,25 +1,37 @@
 require 'tango'
 
+class StubLogger
+  def enter(name); end
+  def leave(name); end
+  def log(message); end
+end
+
+class StubbedNamespace < Tango::Namespace
+  def self.logger
+    @logger ||= StubLogger.new
+  end
+end
+
 module Tango
-  describe Dance do
+  describe Namespace do
 
     it "should run a step" do
       step_run = false
 
-      dance = Dance.new do
+      namespace = Class.new(StubbedNamespace) do
         step "example step" do
           step_run = true
         end
       end
 
-      dance.run "example step"
+      namespace.run "example step"
       step_run.should be_true
     end
 
     it "should run one step from within another" do
       inner_step_run = false
 
-      dance = Dance.new do
+      namespace = Class.new(StubbedNamespace) do
         step "outer step" do
           run "inner step"
         end
@@ -29,24 +41,24 @@ module Tango
         end
       end
 
-      dance.run "outer step"
+      namespace.run "outer step"
       inner_step_run.should be_true
     end
 
     context "passing arguments" do
       it "should pass arguments to a step" do
-        dance = Dance.new do
+        namespace = Class.new(StubbedNamespace) do
           step "example step" do |a, b|
             a.should == 1
             b.should == 2
           end
         end
 
-        dance.run "example step", 1, 2
+        namespace.run "example step", 1, 2
       end
 
       it "should pass arguments when running other steps" do
-        dance = Dance.new do
+        namespace = Class.new(StubbedNamespace) do
           step "outer step" do
             run "inner step", 1, 2
           end
@@ -57,26 +69,7 @@ module Tango
           end
         end
 
-        dance.run "outer step"
-      end
-    end
-
-    context "error handling" do
-      it "should raise an error on an attempt to redefine a step" do
-        expect do
-          Dance.new do
-            step "example step" do; end
-            step "example step" do; end
-          end
-        end.should raise_error(StepAlreadyDefinedError)
-      end
-
-      it "should raise an error on an attempt to run an undefined step" do
-        dance = Dance.new do; end
-
-        expect do
-          dance.run "undefined step"
-        end.should raise_error(UndefinedStepError)
+        namespace.run "outer step"
       end
     end
 

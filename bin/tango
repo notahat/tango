@@ -3,10 +3,8 @@
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__) + "/../lib")
 require 'tango'
 
-def dance(name, &block)
-  Tango::DanceCard.instance.dance(name, &block)
-end
-
 load ARGV[0]
 
-Tango::DanceCard.instance.run ARGV[1]
+namespace_name, step_name = ARGV[1].split(".")
+
+Object.const_get(namespace_name).run(step_name)
