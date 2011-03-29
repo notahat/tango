@@ -11,9 +11,12 @@ module Tango
     end
 
     def self.run(step_name, *args)
-      logger.enter("#{name}.#{step_name}")
+      description = "#{name}.#{step_name}"
+      description << "(" + args.map {|arg| arg.inspect }.join(", ") + ")" unless args.empty?
+
+      logger.enter(description)
       new.send(step_name, *args)
-      logger.leave("#{name}.#{step_name}")
+      logger.leave(description)
     end
 
     def run(step_name, *args)
