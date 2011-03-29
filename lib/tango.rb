@@ -1,5 +1,4 @@
 require 'tango/as_user'
-require 'tango/errors'
 require 'tango/logger'
 require 'tango/met_and_meet'
 require 'tango/namespace'

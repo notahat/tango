@@ -1,4 +1,7 @@
 module Tango
+  class CouldNotMeetError   < RuntimeError; end
+  class MeetWithoutMetError < RuntimeError; end
+
   module MetAndMeet
 
     def met?(&met_block)
