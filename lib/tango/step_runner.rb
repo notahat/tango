@@ -3,8 +3,8 @@ module Tango
   # methods accessible from within the step.
   class StepRunner
 
-    def initialize(dance = nil)
-      @dance = dance
+    def initialize(context = nil)
+      @context = context
     end
 
     def met?(&met_block)
@@ -20,7 +20,7 @@ module Tango
     end
 
     def run(step_name, *args)
-      @dance.run(step_name, *args)
+      @context.run(step_name, *args)
     end
 
     def as(username)

@@ -1,8 +1,9 @@
 module Tango
   class Dance
 
-    def initialize(&block)
-      @steps = {}
+    def initialize(dance_card = nil, &block)
+      @dance_card = dance_card
+      @steps      = {}
       instance_eval(&block)
     end
 
@@ -14,7 +15,7 @@ module Tango
     def run(step_name, *args)
       step = @steps[step_name]
       raise UndefinedStepError, "Step #{step_name} not defined" if step.nil?
-      StepRunner.new(self).instance_exec(*args, &step)
+      StepRunner.new(@dance_card || self).instance_exec(*args, &step)
     end
 
   end
