@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    tango (0.0.3)
+    tango (0.0.4)
 
 GEM
   remote: http://rubygems.org/
