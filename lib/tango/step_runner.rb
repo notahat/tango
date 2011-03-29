@@ -13,9 +13,16 @@ module Tango
 
     def meet(&meet_block)
       raise MeetWithoutMetError if @met_block.nil?
-      unless instance_eval(&@met_block)
+      if instance_eval(&@met_block)
+        log "already met."
+      else
+        log "not already met."
         instance_eval(&meet_block)
-        raise CouldNotMeetError unless instance_eval(&@met_block)
+        if instance_eval(&@met_block)
+          log "met."
+        else
+          raise CouldNotMeetError
+        end
       end
     end
 
@@ -33,6 +40,10 @@ module Tango
     ensure
       Process::Sys.seteuid(uid)
       Process::Sys.setegid(gid)
+    end
+
+    def log(message)
+      @context.log(message) unless @context.nil?
     end
 
   end
