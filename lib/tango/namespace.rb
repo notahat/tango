@@ -1,7 +1,9 @@
+require 'tango/as_user'
 require 'tango/met_and_meet'
 
 module Tango
   class Namespace
+    include AsUser
     include MetAndMeet
     
     def self.step(step_name, &block)
