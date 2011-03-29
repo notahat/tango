@@ -10,6 +10,7 @@ module Tango
 
     def meet(&meet_block)
       raise MeetWithoutMetError if @met_block.nil?
+
       if instance_eval(&@met_block)
         log "already met."
       else

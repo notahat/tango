@@ -24,6 +24,10 @@ module Tango
       self.class.logger.log(message)
     end
 
+    def self.method_missing(method, *args)
+      new.send(method, *args)
+    end
+
   private
 
     def self.logger
