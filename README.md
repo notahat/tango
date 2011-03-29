@@ -1,3 +1,15 @@
+Credit Where It's Due
+---------------------
+
+This is a re-invention of Ben Hoskings's excellent
+[Babushka](https://github.com/benhoskings/babushka).
+
+There are a bunch of things I love about Babushka, and a bunch of other things
+that really don't fit with the way we want to use it at
+[Envato](http://envato.com/). Tango is an experiment in changing around a few
+of Babushka's fundamentals to try to find a better fit.
+
+
 Example
 -------
 
@@ -8,10 +20,7 @@ Example
 
       step "bootstrap" do
         met? { system "brew info" }
-
-        meet do
-          system %{ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"}
-        end
+        meet { system %{ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"} }
       end
 
       step "install" do |formula|
@@ -33,3 +42,4 @@ Example
         meet { system "brew install --no-gtk mtr" }
       end
     end
+
