@@ -15,17 +15,17 @@ Example
 
     class Homebrew < Tango::Namespace
       def installed?(formula)
-        `brew info #{formula}` !~ /Not installed/
+        shell("brew", "info", formula, :echo => false).output !~ /Not installed/
       end
 
       step "bootstrap" do
-        met? { system "brew info" }
-        meet { system %{ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"} }
+        met? { shell("brew info").succeeded? }
+        meet { shell(%{ruby -e "$(curl -fsSL https://gist.github.com/raw/323731/install_homebrew.rb)"}) }
       end
 
       step "install" do |formula|
         met? { installed?(formula) }
-        meet { system "brew install #{formula}" }
+        meet { shell("brew, "install", formula) }
       end
     end
 
@@ -39,7 +39,7 @@ Example
 
       step "install mtr" do
         met? { Homebrew.installed?("mtr") }
-        meet { system "brew install --no-gtk mtr" }
+        meet { shell("brew install --no-gtk mtr") }
       end
     end
 

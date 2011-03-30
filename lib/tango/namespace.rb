@@ -1,10 +1,12 @@
 require 'tango/as_user'
 require 'tango/met_and_meet'
+require 'tango/shell'
 
 module Tango
   class Namespace
     include AsUser
     include MetAndMeet
+    include Shell
     
     def self.step(step_name, &block)
       define_method(step_name, &block)
@@ -25,6 +27,10 @@ module Tango
 
     def log(message)
       self.class.logger.log(message)
+    end
+
+    def log_raw(message)
+      self.class.logger.log_raw(message)
     end
 
     def self.method_missing(method, *args)

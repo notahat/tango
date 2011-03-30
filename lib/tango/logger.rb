@@ -10,17 +10,21 @@ module Tango
     end
 
     def enter(step_name)
-      @io.puts "#{indent}#{step_name} {\n"
+      log "#{step_name} {"
       @depth += 1
-    end
-
-    def log(message)
-      @io.puts "#{indent}#{message}\n"
     end
 
     def leave(step_name)
       @depth -= 1
-      @io.puts "#{indent}} √ #{step_name}\n"
+      log "} √ #{step_name}"
+    end
+
+    def log(message)
+      @io.puts "#{indent}#{message}"
+    end
+
+    def log_raw(message)
+      @io.write message
     end
 
   private
@@ -31,3 +35,4 @@ module Tango
 
   end
 end
+
