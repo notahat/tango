@@ -14,6 +14,8 @@ module Tango
       Process.waitpid(pid)
       pipe.close
 
+      log "" if options[:echo]
+
       OpenStruct.new(
         :output     => output,
         :status     => $?.exitstatus,

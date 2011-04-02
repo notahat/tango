@@ -33,8 +33,9 @@ module Tango
 
     it "should echo the command and its output" do
       @stub = @stub_class.new
-      @stub.should_receive(:log).with("% echo Hello, world!\n\n")
-      @stub.should_receive(:log_raw).with("Hello, world!\n")
+      @stub.should_receive(:log).with("% echo Hello, world!\n\n").once.ordered
+      @stub.should_receive(:log_raw).with("Hello, world!\n").once.ordered
+      @stub.should_receive(:log).with("").once.ordered
 
       @stub.shell("echo", "Hello, world!")
     end
