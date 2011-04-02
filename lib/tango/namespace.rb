@@ -9,17 +9,24 @@ module Tango
     include Shell
     
     def self.step(step_name, &block)
-      define_method(step_name, &block)
+      define_method(step_name) do |*args|
+        description = step_description(step_name, args)
+
+        logger.enter(description)
+        result = instance_exec(*args, &block)
+        logger.leave(description)
+
+        result
+      end
     end
 
-    def run(step_name, *args)
+    def step_description(step_name, args)
       description = "#{self.class.name}.#{step_name}"
       description << "(" + args.map {|arg| arg.inspect }.join(", ") + ")" unless args.empty?
-
-      logger.enter(description)
-      send(step_name, *args)
-      logger.leave(description)
+      description
     end
+
+    alias_method :run, :send
 
     def log(message)
       logger.log(message)

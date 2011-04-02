@@ -35,9 +35,9 @@ Example
       end
 
       step "install" do
-        @brew.run "bootstrap"
-        @brew.run "install", "git"
-        @brew.run "install", "mysql"
+        @brew.bootstrap
+        @brew.install "git"
+        @brew.install "mysql"
         run "install mtr"
       end
 
