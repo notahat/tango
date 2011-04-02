@@ -71,5 +71,5 @@ Example Runner
 Running the Example
 -------------------
 
-    tango example_installer.rb Example.install
+    tango example_installer.rb ExampleInstaller.install
 
