@@ -7,7 +7,7 @@ class StubLogger
 end
 
 class StubbedNamespace < Tango::Namespace
-  def self.logger
+  def logger
     @logger ||= StubLogger.new
   end
 end
@@ -24,7 +24,7 @@ module Tango
         end
       end
 
-      namespace.run "example step"
+      namespace.new.run "example step"
       step_run.should be_true
     end
 
@@ -41,7 +41,7 @@ module Tango
         end
       end
 
-      namespace.run "outer step"
+      namespace.new.run "outer step"
       inner_step_run.should be_true
     end
 
@@ -54,7 +54,7 @@ module Tango
           end
         end
 
-        namespace.run "example step", 1, 2
+        namespace.new.run "example step", 1, 2
       end
 
       it "should pass arguments when running other steps" do
@@ -69,7 +69,7 @@ module Tango
           end
         end
 
-        namespace.run "outer step"
+        namespace.new.run "outer step"
       end
     end
 

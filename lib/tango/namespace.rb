@@ -12,34 +12,24 @@ module Tango
       define_method(step_name, &block)
     end
 
-    def self.run(step_name, *args)
-      description = "#{name}.#{step_name}"
+    def run(step_name, *args)
+      description = "#{self.class.name}.#{step_name}"
       description << "(" + args.map {|arg| arg.inspect }.join(", ") + ")" unless args.empty?
 
       logger.enter(description)
-      new.send(step_name, *args)
+      send(step_name, *args)
       logger.leave(description)
     end
 
-    def run(step_name, *args)
-      self.class.run(step_name, *args)
-    end
-
     def log(message)
-      self.class.logger.log(message)
+      logger.log(message)
     end
 
     def log_raw(message)
-      self.class.logger.log_raw(message)
+      logger.log_raw(message)
     end
 
-    def self.method_missing(method, *args)
-      new.send(method, *args)
-    end
-
-  private
-
-    def self.logger
+    def logger
       Logger.instance
     end
 

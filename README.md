@@ -13,7 +13,7 @@ of Babushka's fundamentals to try to find a better fit.
 Example
 -------
 
-    class Homebrew < Tango::Namespace
+    class HomebrewInstaller < Tango::Namespace
       def installed?(formula)
         shell("brew", "info", formula, :echo => false).output !~ /Not installed/
       end
@@ -25,20 +25,24 @@ Example
 
       step "install" do |formula|
         met? { installed?(formula) }
-        meet { shell("brew, "install", formula) }
+        meet { shell("brew", "install", formula) }
       end
     end
 
     class MyNamespace < Tango::Namespace
+      def initialize
+        @brew = HomebrewInstaller.new
+      end
+
       step "install" do
-        Homebrew.run "bootstrap"
-        Homebrew.run "install", "git"
-        Homebrew.run "install", "mysql"
+        @brew.run "bootstrap"
+        @brew.run "install", "git"
+        @brew.run "install", "mysql"
         run "install mtr"
       end
 
       step "install mtr" do
-        met? { Homebrew.installed?("mtr") }
+        met? { @brew.installed?("mtr") }
         meet { shell("brew install --no-gtk mtr") }
       end
     end
