@@ -4,7 +4,7 @@ require 'tango/met_and_meet'
 require 'tango/shell'
 
 module Tango
-  class Namespace
+  class Runner
     include AsUser
     include Delegate
     include MetAndMeet

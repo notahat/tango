@@ -13,7 +13,7 @@ of Babushka's fundamentals to try to find a better fit.
 Example
 -------
 
-    class HomebrewInstaller < Tango::Namespace
+    class HomebrewInstaller < Tango::Runner
       def installed?(formula)
         shell("brew", "info", formula, :echo => false).output !~ /Not installed/
       end
@@ -29,7 +29,7 @@ Example
       end
     end
 
-    class MyNamespace < Tango::Namespace
+    class MyInstaller < Tango::Runner
       def initialize
         @brew = HomebrewInstaller.new
       end

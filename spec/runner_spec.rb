@@ -1,37 +1,37 @@
 require 'tango'
 
-class StubLogger
+class StubbedLogger
   def enter(name); end
   def leave(name); end
   def log(message); end
 end
 
-class StubbedNamespace < Tango::Namespace
+class StubbedRunner < Tango::Runner
   def logger
-    @logger ||= StubLogger.new
+    @logger ||= StubbedLogger.new
   end
 end
 
 module Tango
-  describe Namespace do
+  describe Runner do
 
     it "should run a step" do
       step_run = false
 
-      namespace = Class.new(StubbedNamespace) do
+      runner = Class.new(StubbedRunner) do
         step "example step" do
           step_run = true
         end
       end
 
-      namespace.new.run "example step"
+      runner.new.run "example step"
       step_run.should be_true
     end
 
     it "should run one step from within another" do
       inner_step_run = false
 
-      namespace = Class.new(StubbedNamespace) do
+      runner = Class.new(StubbedRunner) do
         step "outer step" do
           run "inner step"
         end
@@ -41,24 +41,24 @@ module Tango
         end
       end
 
-      namespace.new.run "outer step"
+      runner.new.run "outer step"
       inner_step_run.should be_true
     end
 
     context "passing arguments" do
       it "should pass arguments to a step" do
-        namespace = Class.new(StubbedNamespace) do
+        runner = Class.new(StubbedRunner) do
           step "example step" do |a, b|
             a.should == 1
             b.should == 2
           end
         end
 
-        namespace.new.run "example step", 1, 2
+        runner.new.run "example step", 1, 2
       end
 
       it "should pass arguments when running other steps" do
-        namespace = Class.new(StubbedNamespace) do
+        runner = Class.new(StubbedRunner) do
           step "outer step" do
             run "inner step", 1, 2
           end
@@ -69,7 +69,7 @@ module Tango
           end
         end
 
-        namespace.new.run "outer step"
+        runner.new.run "outer step"
       end
     end
 
