@@ -7,4 +7,4 @@ load ARGV[0]
 
 namespace_name, step_name = ARGV[1].split(".")
 
-Object.const_get(namespace_name).run(step_name)
+Object.const_get(namespace_name).new.run(step_name)
