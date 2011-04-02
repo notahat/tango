@@ -73,3 +73,7 @@ Running the Example
 
     tango example_installer.rb ExampleInstaller.install
 
+Copyright
+---------
+
+Copyright © 2011 Envato &amp; Pete Yandell. See LICENSE for details.
