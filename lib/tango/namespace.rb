@@ -1,10 +1,12 @@
 require 'tango/as_user'
+require 'tango/delegate'
 require 'tango/met_and_meet'
 require 'tango/shell'
 
 module Tango
   class Namespace
     include AsUser
+    include Delegate
     include MetAndMeet
     include Shell
     
@@ -28,13 +30,7 @@ module Tango
 
     alias_method :run, :send
 
-    def log(message)
-      logger.log(message)
-    end
-
-    def log_raw(message)
-      logger.log_raw(message)
-    end
+    delegate :log, :log_raw, :to => :logger
 
     def logger
       Logger.instance
