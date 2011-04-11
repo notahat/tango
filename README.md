@@ -73,6 +73,44 @@ Running the Example
 
     tango example_installer.rb ExampleInstaller.install
 
+Useful Helper Methods
+---------------------
+
+### Running Shell Commands
+
+    step "install something" do
+      result = shell("apt-get", "install", "something")
+      if result.succeeded?
+        write("/tmp/something-install.log", result.output)
+      end
+    end
+
+### Writing Config Files
+
+    step "configure foo" do
+      @log_directory = "/var/log/foo.log"
+      write "/etc/foo.conf", <<-EOF
+        # Config file for foo
+        log_file <%= @log_file %>
+      end
+    end
+
+### Changing the Working Directory
+
+    step "migrate" do
+      cd "/rails_apps/blog" do
+        shell "rake db:migrate"
+      end
+    end
+
+### Running As Another User
+
+    step "..." do
+      as "fred" do
+        FileUtils.touch("/home/fred/fred_woz_ere")
+      end
+    end
+
 Copyright
 ---------
 
