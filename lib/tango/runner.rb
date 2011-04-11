@@ -2,6 +2,7 @@ require 'tango/as_user'
 require 'tango/delegate'
 require 'tango/met_and_meet'
 require 'tango/shell'
+require 'tango/working_directory'
 
 module Tango
   class Runner
@@ -9,6 +10,7 @@ module Tango
     include Delegate
     include MetAndMeet
     include Shell
+    include WorkingDirectory
     
     def self.step(step_name, &block)
       define_method(step_name) do |*args|
