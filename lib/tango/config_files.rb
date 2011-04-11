@@ -3,8 +3,15 @@ module Tango
 
     def write(path, contents)
       File.open(path, "w") do |file|
-        file.write(contents)
+        file.write(unindent(contents))
       end
+    end
+
+  private
+
+    def unindent(text)
+      indent = /^ */.match(text)
+      text.gsub(/^#{indent}/, "")
     end
 
   end

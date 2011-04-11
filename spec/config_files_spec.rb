@@ -19,6 +19,15 @@ module Tango
       File.read("tmp/example.conf").should == "Hello, world!"
     end
 
+    it "should unindent contents before writing" do
+      @stub.write("tmp/example.conf", <<-EOF)
+        Goodbye
+          cruel
+        world!
+      EOF
+      File.read("tmp/example.conf").should == "Goodbye\n  cruel\nworld!\n"
+    end
+
     it "should overwrite an existing file" do
       FileUtils.touch("tmp/example.conf")
       @stub.write("tmp/example.conf", "Hello, world!")
