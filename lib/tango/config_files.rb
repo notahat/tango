@@ -1,10 +1,12 @@
+require 'erb'
+
 module Tango
   module ConfigFiles
 
     def write(path, contents)
-      File.open(path, "w") do |file|
-        file.write(unindent(contents))
-      end
+      contents = unindent(contents)
+      contents = ERB.new(contents).result(binding)
+      File.open(path, "w") {|file| file.write(contents) }
     end
 
   private
