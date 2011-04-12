@@ -1,6 +1,7 @@
 require 'tango/as_user'
 require 'tango/config_files'
 require 'tango/delegate'
+require 'tango/fetch'
 require 'tango/met_and_meet'
 require 'tango/shell'
 require 'tango/working_directory'
@@ -10,6 +11,7 @@ module Tango
     include AsUser
     include ConfigFiles
     include Delegate
+    include Fetch
     include MetAndMeet
     include Shell
     include WorkingDirectory

@@ -111,6 +111,14 @@ Useful Helper Methods
       end
     end
 
+### Fetching a Remote URL
+
+    step "..." do
+      cd "/tmp" do
+        fetch "http://example.com/something.tar.gz"
+      end
+    end
+
 Copyright
 ---------
 
