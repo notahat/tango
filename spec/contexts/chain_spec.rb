@@ -54,21 +54,24 @@ module Tango::Contexts
       @context.should_not be_in_context
     end
 
-    it "should run the enter method of each context in a chain" do
-      a = @context_class.new
-      b = @context_class.new
-      Chain.new.in_context(a).in_context(b) do
-        a.should be_in_context
-        b.should be_in_context
+    describe "when chaining contexts" do
+      before do
+        @a = @context_class.new
+        @b = @context_class.new
       end
-    end
 
-    it "should run the leave method of each context in a chain" do
-      a = @context_class.new
-      b = @context_class.new
-      Chain.new.in_context(a).in_context(b) { }
-      a.should_not be_in_context
-      b.should_not be_in_context
+      it "should run the enter method of each context" do
+        Chain.new.in_context(@a).in_context(@b) do
+          @a.should be_in_context
+          @b.should be_in_context
+        end
+      end
+
+      it "should run the leave method of each context" do
+        Chain.new.in_context(@a).in_context(@b) { }
+        @a.should_not be_in_context
+        @b.should_not be_in_context
+      end
     end
 
   end
