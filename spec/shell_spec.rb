@@ -48,5 +48,13 @@ module Tango
       @stub.shell("echo", "Hello, world!", :echo => false).output.should == "Hello, world!\n"
     end
 
+    context "shell! method" do
+      it "should raise an exception if the command fails" do
+        expect {
+          @stub_class.new.shell!("test", "a", "=", "b")
+        }.should raise_error("Shell command failed with status 1")
+      end
+    end
+
   end
 end

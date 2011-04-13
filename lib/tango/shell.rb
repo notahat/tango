@@ -24,6 +24,12 @@ module Tango
       )
     end
 
+    def shell!(command, *args)
+      result = shell(command, *args)
+      raise "Shell command failed with status #{result.status}" if result.failed?
+      result
+    end
+
   private
 
     def fork_and_exec(command, *args)
