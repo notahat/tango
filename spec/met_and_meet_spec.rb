@@ -1,6 +1,6 @@
-require 'tango'
+require 'derp'
 
-module Tango
+module Derp
   describe MetAndMeet do
 
     before do

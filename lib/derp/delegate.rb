@@ -1,4 +1,4 @@
-module Tango
+module Derp
   module Delegate
     
     def self.included(base)

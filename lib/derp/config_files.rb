@@ -1,7 +1,7 @@
 require 'erb'
 require 'fileutils'
 
-module Tango
+module Derp
   module ConfigFiles
 
     def write(path, contents, permissions = nil)

@@ -1,11 +1,11 @@
-require 'tango'
+require 'derp'
 
-module Tango
+module Derp
   describe Shell do
 
     before do
       @stub_class = Class.new do
-        include Tango::Shell
+        include Derp::Shell
         def log(message); end
         def log_raw(message); end
       end

@@ -1,4 +1,4 @@
-module Tango
+module Derp
   module AsUser
 
     def as(username)

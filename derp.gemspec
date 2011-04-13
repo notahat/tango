@@ -1,16 +1,16 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "tango/version"
+require "derp/version"
 
 Gem::Specification.new do |s|
-  s.name        = "tango"
-  s.version     = Tango::VERSION
+  s.name        = "derp"
+  s.version     = Derp::VERSION
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Pete Yandell"]
   s.email       = ["pete@notahat.com"]
   s.homepage    = ""
-  s.summary     = %q{Experiment in deployment tools.}
-  s.description = %q{Experiment in deployment tools, taking ideas from babushka and elsewhere.}
+  s.summary     = %q{Experiment in derployment tools.}
+  s.description = %q{Experiment in derployment tools, taking ideas from babushka and elsewhere.}
 
   s.add_development_dependency "rspec"
 

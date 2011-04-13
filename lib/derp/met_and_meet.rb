@@ -1,4 +1,4 @@
-module Tango
+module Derp
   class CouldNotMeetError   < RuntimeError; end
   class MeetWithoutMetError < RuntimeError; end
 

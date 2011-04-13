@@ -1,4 +1,4 @@
-module Tango
+module Derp
   class Logger
     def self.instance
       @logger ||= Logger.new

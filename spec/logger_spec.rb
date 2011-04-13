@@ -1,7 +1,7 @@
-require 'tango'
+require 'derp'
 require 'stringio'
 
-module Tango
+module Derp
   describe Logger do
 
     before do

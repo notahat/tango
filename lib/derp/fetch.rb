@@ -1,4 +1,4 @@
-module Tango
+module Derp
   module Fetch
 
     def fetch(url)

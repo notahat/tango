@@ -1,4 +1,4 @@
-require 'tango'
+require 'derp'
 
 class StubbedLogger
   def enter(name); end
@@ -6,13 +6,13 @@ class StubbedLogger
   def log(message); end
 end
 
-class StubbedRunner < Tango::Runner
+class StubbedRunner < Derp::Runner
   def logger
     @logger ||= StubbedLogger.new
   end
 end
 
-module Tango
+module Derp
   describe Runner do
 
     it "should run a step" do

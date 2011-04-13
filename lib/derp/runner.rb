@@ -1,12 +1,12 @@
-require 'tango/as_user'
-require 'tango/config_files'
-require 'tango/delegate'
-require 'tango/fetch'
-require 'tango/met_and_meet'
-require 'tango/shell'
-require 'tango/working_directory'
+require 'derp/as_user'
+require 'derp/config_files'
+require 'derp/delegate'
+require 'derp/fetch'
+require 'derp/met_and_meet'
+require 'derp/shell'
+require 'derp/working_directory'
 
-module Tango
+module Derp
   class Runner
     include AsUser
     include ConfigFiles

@@ -1,6 +1,6 @@
 require 'ostruct'
 
-module Tango
+module Derp
   module Shell
 
     def shell(command, *args)
