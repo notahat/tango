@@ -31,7 +31,7 @@ Example Runner
         shell("dpkg-query", "--status", package, :echo => false).output !~ /not.installed|deinstall/
       end
 
-      step "install" do |package|
+      step :install do |package|
         met? { installed?(package) }
         # Need to figure out how to make this non-interactive. See:
         # http://ubuntuforums.org/showthread.php?t=1218525
@@ -44,7 +44,7 @@ Example Runner
         shell("gem", "query", "--installed", "--name-matches", gem, :echo => false).output =~ /true/
       end
 
-      step "install" do |gem|
+      step :install do |gem|
         met? { installed?(gem) }
         meet { shell("gem", "install", gem) }
       end
@@ -56,7 +56,7 @@ Example Runner
         @gem = GemInstaller.new
       end
 
-      step "install" do
+      step :install do
         @apt.install "build-essential"
 
         @apt.install "mysql-server"
@@ -71,14 +71,14 @@ Example Runner
 Running the Example
 -------------------
 
-    tango example_installer.rb ExampleInstaller.install
+    sudo tango example_installer.rb ExampleInstaller.install
 
 Useful Helper Methods
 ---------------------
 
 ### Running Shell Commands
 
-    step "install something" do
+    step :install_something do
       result = shell("apt-get", "install", "something")
       if result.succeeded?
         write("/tmp/something-install.log", result.output)
@@ -87,7 +87,7 @@ Useful Helper Methods
 
 ### Writing Config Files
 
-    step "configure foo" do
+    step :configure_foo do
       @log_directory = "/var/log/foo.log"
       write "/etc/foo.conf", <<-EOF
         # Config file for foo
@@ -97,7 +97,7 @@ Useful Helper Methods
 
 ### Changing the Working Directory
 
-    step "migrate" do
+    step :migrate do
       cd "/rails_apps/blog" do
         shell "rake db:migrate"
       end
@@ -105,7 +105,7 @@ Useful Helper Methods
 
 ### Running As Another User
 
-    step "..." do
+    step :install do
       as "fred" do
         FileUtils.touch("/home/fred/fred_woz_ere")
       end
@@ -113,7 +113,7 @@ Useful Helper Methods
 
 ### Fetching a Remote URL
 
-    step "..." do
+    step :install do
       cd "/tmp" do
         fetch "http://example.com/something.tar.gz"
       end
