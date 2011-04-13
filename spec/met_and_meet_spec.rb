@@ -69,6 +69,26 @@ module Tango
       end.should raise_error(MeetWithoutMetError)
     end
 
+    it "should not have met blocks trample on one another" do
+      klass = Class.new do
+        include MetAndMeet
+
+        def log(message); end
+
+        def a
+          met? { false }
+          meet { b }
+        end
+
+        def b
+          met? { @b_done }
+          meet { @b_done = true }
+        end
+      end
+
+      expect { klass.new.a }.should raise_error(CouldNotMeetError)
+    end
+
   end
 end
 
