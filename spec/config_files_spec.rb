@@ -11,6 +11,9 @@ module Derp
       end
       @stub = stub_class.new
 
+      # Make the tmp directory if it doesn't exist.
+      Dir.mkdir("tmp") unless File.exist?("tmp")
+
       # Clear out the tmp directory before each test.
       Dir.glob("tmp/*").each {|path| File.delete(path) }
     end
