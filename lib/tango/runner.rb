@@ -1,5 +1,5 @@
 require 'tango/config_files'
-require 'tango/contexts'
+require 'tango/contexts/helpers'
 require 'tango/delegate'
 require 'tango/fetch'
 require 'tango/met_and_meet'
@@ -8,7 +8,7 @@ require 'tango/shell'
 module Tango
   class Runner
     include ConfigFiles
-    include Contexts
+    include Contexts::Helpers
     include Delegate
     include Fetch
     include MetAndMeet

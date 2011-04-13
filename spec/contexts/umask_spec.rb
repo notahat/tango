@@ -5,7 +5,7 @@ module Tango::Contexts
 
     before do
       stub_class = Class.new do
-        include Tango::Contexts
+        include Helpers
       end
       @stub = stub_class.new
 
