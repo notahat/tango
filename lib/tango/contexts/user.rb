@@ -14,7 +14,7 @@ module Tango
         Process::Sys.seteuid(info.uid)
       end
 
-      def exit
+      def leave
         Process::Sys.seteuid(@uid)
         Process::Sys.setegid(@gid)
       end

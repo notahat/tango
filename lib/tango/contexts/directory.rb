@@ -11,7 +11,7 @@ module Tango
         Dir.chdir(@directory)
       end
 
-      def exit
+      def leave
         Dir.chdir(@old_directory)
       end
 

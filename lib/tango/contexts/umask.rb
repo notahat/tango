@@ -10,7 +10,7 @@ module Tango
         @old_umask = File.umask(@umask)
       end
 
-      def exit
+      def leave
         File.umask(@old_umask)
       end
 

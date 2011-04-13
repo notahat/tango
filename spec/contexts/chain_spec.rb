@@ -17,7 +17,7 @@ module Tango::Contexts
           @in_context = true
         end
 
-        def exit
+        def leave
           @in_context = false
         end
       end
@@ -36,18 +36,18 @@ module Tango::Contexts
       result.should == "I woz ere."
     end
 
-    it "should run the enter method before the block" do
+    it "should run the context's enter method before the block" do
       Chain.new.in_context(@context) do
         @context.should be_in_context
       end
     end
 
-    it "should run the exit method after leaving the block" do
+    it "should run the context's leave method after leaving the block" do
       Chain.new.in_context(@context) { }
       @context.should_not be_in_context
     end
 
-    it "should run the exit method on an exception" do
+    it "should run the context's leave method on an exception" do
       expect {
         Chain.new.in_context(@context) { raise "Uh oh" }
       }.should raise_error("Uh oh")
@@ -63,7 +63,7 @@ module Tango::Contexts
       end
     end
 
-    it "should run the exit method of each context in a chain" do
+    it "should run the leave method of each context in a chain" do
       a = @context_class.new
       b = @context_class.new
       Chain.new.in_context(a).in_context(b) { }

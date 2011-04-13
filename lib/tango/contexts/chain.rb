@@ -26,7 +26,7 @@ module Tango
         begin
           yield
         ensure
-          @contexts.reverse.each {|context| context.exit }
+          @contexts.reverse.each {|context| context.leave }
         end
       end
 
