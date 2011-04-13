@@ -33,8 +33,6 @@ Example Runner
 
       step :install do |package|
         met? { installed?(package) }
-        # Need to figure out how to make this non-interactive. See:
-        # http://ubuntuforums.org/showthread.php?t=1218525
         meet { shell("apt-get", "install", "-y", package) }
       end
     end
@@ -85,6 +83,8 @@ Useful Helper Methods
       end
     end
 
+Use shell! to raise an exception if the command exits with non-zero status.
+
 ### Writing Config Files
 
     step :configure_foo do
@@ -95,27 +95,44 @@ Useful Helper Methods
       end
     end
 
+### Fetching a Remote URL
+
+    step :install do
+      cd "/tmp" do
+        fetch "http://example.com/something.tar.gz"
+      end
+    end
+
+Chainable Helper Methods
+------------------------
+
+You can use these together like this:
+
+    in_directory("/tmp").with_umask(0022) do
+      ...
+    end
+
 ### Changing the Working Directory
 
     step :migrate do
-      cd "/rails_apps/blog" do
+      in_directory "/rails_apps/blog" do
         shell "rake db:migrate"
+      end
+    end
+
+### Changing the umask
+
+    step :install do
+      with_umask 0077 do
+        shell "make install"
       end
     end
 
 ### Running As Another User
 
     step :install do
-      as "fred" do
+      as_user "fred" do
         FileUtils.touch("/home/fred/fred_woz_ere")
-      end
-    end
-
-### Fetching a Remote URL
-
-    step :install do
-      cd "/tmp" do
-        fetch "http://example.com/something.tar.gz"
       end
     end
 

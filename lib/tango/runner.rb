@@ -1,20 +1,18 @@
-require 'tango/as_user'
 require 'tango/config_files'
+require 'tango/contexts'
 require 'tango/delegate'
 require 'tango/fetch'
 require 'tango/met_and_meet'
 require 'tango/shell'
-require 'tango/working_directory'
 
 module Tango
   class Runner
-    include AsUser
     include ConfigFiles
+    include Contexts
     include Delegate
     include Fetch
     include MetAndMeet
     include Shell
-    include WorkingDirectory
     
     def self.step(step_name, &block)
       define_method(step_name) do |*args|

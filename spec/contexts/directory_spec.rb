@@ -1,11 +1,11 @@
 require 'tango'
 
-module Tango
-  describe WorkingDirectory do
+module Tango::Contexts
+  describe Directory do
     
     before do
       stub_class = Class.new do
-        include WorkingDirectory
+        include Tango::Contexts
       end
       @stub = stub_class.new
 
@@ -19,18 +19,18 @@ module Tango
 
     it "should run a block" do
       block_run = false
-      @stub.cd("/tmp") { block_run = true }
+      @stub.in_directory("/tmp") { block_run = true }
       block_run.should be_true
     end
 
     it "should return the return value of the block" do
-      result = @stub.cd("/tmp") { "I woz ere." }
+      result = @stub.in_directory("/tmp") { "I woz ere." }
       result.should == "I woz ere."
     end
 
     it "should change directory" do
       directory = Dir.getwd + "/lib"
-      @stub.cd(directory) do
+      @stub.in_directory(directory) do
         Dir.getwd.should == directory
       end
     end
@@ -38,7 +38,7 @@ module Tango
     it "should restore the original working directory" do
       old_directory = Dir.getwd
       directory = Dir.getwd + "/lib"
-      @stub.cd(directory) { }
+      @stub.in_directory(directory) { }
       Dir.getwd.should == old_directory
     end
 
@@ -46,7 +46,7 @@ module Tango
       old_directory = Dir.getwd
       directory = Dir.getwd + "/lib"
       expect {
-        @stub.cd(directory) { raise "Uh oh!" }
+        @stub.in_directory(directory) { raise "Uh oh!" }
       }.should raise_error
       Dir.getwd.should == old_directory
     end
