@@ -6,7 +6,7 @@ This is a re-invention of Ben Hoskings's excellent
 
 There are a bunch of things I love about Babushka, and a bunch of other things
 that really don't fit with the way we want to use it at
-[Envato](http://envato.com/). Tango is an experiment in changing around a few
+[Envato](http://envato.com/). Derp is an experiment in changing around a few
 of Babushka's fundamentals to try to find a better fit.
 
 
@@ -21,12 +21,12 @@ Bootstrapping Ubuntu
     cd rubygems-1.6.2
     sudo ruby setup.rb --no-format-executable
 
-    sudo gem install tango
+    sudo gem install derp
 
 Example Runner
 --------------
 
-    class AptInstaller < Tango::Runner
+    class AptInstaller < Derp::Runner
       def installed?(package)
         shell("dpkg-query", "--status", package, :echo => false).output !~ /not.installed|deinstall/
       end
@@ -39,7 +39,7 @@ Example Runner
       end
     end
 
-    class GemInstaller < Tango::Runner
+    class GemInstaller < Derp::Runner
       def installed?(gem)
         shell("gem", "query", "--installed", "--name-matches", gem, :echo => false).output =~ /true/
       end
@@ -50,7 +50,7 @@ Example Runner
       end
     end
 
-    class ExampleInstaller < Tango::Runner
+    class ExampleInstaller < Derp::Runner
       def initialize
         @apt = AptInstaller.new
         @gem = GemInstaller.new
@@ -71,7 +71,7 @@ Example Runner
 Running the Example
 -------------------
 
-    tango example_installer.rb ExampleInstaller.install
+    derp example_installer.rb ExampleInstaller.install
 
 Useful Helper Methods
 ---------------------
