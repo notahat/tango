@@ -81,8 +81,8 @@ module Tango
         end
 
         def b
-          met? { @b_done }
-          meet { @b_done = true }
+          met? { true }
+          meet { }
         end
       end
 
