@@ -3,6 +3,11 @@
 $LOAD_PATH << File.expand_path(File.dirname(__FILE__) + "/../lib")
 require 'tango'
 
+if ARGV[0].nil?
+  Tango.print_usage
+  exit
+end
+
 load ARGV[0]
 
 namespace_name, step_name = ARGV[1].split(".")
