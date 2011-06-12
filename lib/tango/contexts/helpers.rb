@@ -14,8 +14,8 @@ module Tango
         in_context(Umask.new(umask), &block)
       end
 
-      def as_user(user, &block)
-        as_user(User.new(umask), &block)
+      def as_user(umask, &block)
+        in_context(User.new(umask), &block)
       end
 
     end

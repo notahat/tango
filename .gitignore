@@ -3,4 +3,5 @@ tmp/*
 *.gem
 .bundle
 .DS_Store
-.rvmrc
+/.rvmrc
+/tags

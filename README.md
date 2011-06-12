@@ -35,7 +35,7 @@ Example Runner
 
       step :install do |package|
         met? { installed?(package) }
-        meet { shell("apt-get", "install", "-y", package) }
+        meet { shell!("apt-get", "install", "-y", package) }
       end
     end
 
@@ -46,7 +46,7 @@ Example Runner
 
       step :install do |gem|
         met? { installed?(gem) }
-        meet { shell("gem", "install", gem) }
+        meet { shell!("gem", "install", gem) }
       end
     end
 
@@ -133,7 +133,7 @@ You can use these together like this:
       end
     end
 
-### Changing the umask
+### Changing the Umask
 
     step :install do
       with_umask 0077 do
