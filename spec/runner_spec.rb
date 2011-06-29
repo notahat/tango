@@ -24,7 +24,7 @@ module Tango
         end
       end
 
-      runner.new.run "example step"
+      runner.new.send "example step"
       step_run.should be_true
     end
 
@@ -33,7 +33,7 @@ module Tango
 
       runner = Class.new(StubbedRunner) do
         step "outer step" do
-          run "inner step"
+          send "inner step"
         end
 
         step "inner step" do
@@ -41,7 +41,7 @@ module Tango
         end
       end
 
-      runner.new.run "outer step"
+      runner.new.send "outer step"
       inner_step_run.should be_true
     end
 
@@ -54,13 +54,13 @@ module Tango
           end
         end
 
-        runner.new.run "example step", 1, 2
+        runner.new.send "example step", 1, 2
       end
 
       it "should pass arguments when running other steps" do
         runner = Class.new(StubbedRunner) do
           step "outer step" do
-            run "inner step", 1, 2
+            send "inner step", 1, 2
           end
 
           step "inner step" do |a, b|
@@ -69,7 +69,7 @@ module Tango
           end
         end
 
-        runner.new.run "outer step"
+        runner.new.send "outer step"
       end
     end
 

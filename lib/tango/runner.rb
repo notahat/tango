@@ -32,8 +32,6 @@ module Tango
       description
     end
 
-    alias_method :run, :send
-
     delegate :log, :log_raw, :to => :logger
 
     def logger
