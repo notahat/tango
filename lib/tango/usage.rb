@@ -4,7 +4,7 @@ module Tango
   def self.print_usage
     puts <<-USAGE
 Tango v#{Tango::VERSION}
-usage: tango step_file.rb ClassName.step_name
+usage: tango <ruby code to eval>
     USAGE
   end
 end
