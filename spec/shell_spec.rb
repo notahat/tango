@@ -31,6 +31,11 @@ module Tango
       result.output.should == "Hello, world!\n"
     end
 
+    it "catches stderr too" do
+      result = @stub_class.new.shell("echo 'Hello, world!' 1>&2")
+      result.output.should == "Hello, world!\n"
+    end
+
     it "should echo the command and its output" do
       @stub = @stub_class.new
       @stub.should_receive(:log).with("% echo Hello, world!\n\n").once.ordered
