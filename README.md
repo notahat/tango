@@ -26,6 +26,8 @@ Bootstrapping Ubuntu
 Example Runner
 --------------
 
+    require 'tango'
+
     class AptInstaller < Tango::Runner
       def installed?(package)
         shell("dpkg-query", "--status", package, :echo => false).output !~ /not.installed|deinstall/
@@ -69,7 +71,18 @@ Example Runner
 Running the Example
 -------------------
 
-    sudo tango example_installer.rb ExampleInstaller.install
+The normal way to do this is to use Rake as a front-end for Tango, so have a Rakefile like this:
+
+    require 'example_installer'
+
+    desc "Install MySQL, Git, and bundler."
+    task :example_install do
+      ExampleInstaller.new.install
+    end
+
+And then run:
+
+    rake example_install
 
 Useful Helper Methods
 ---------------------
