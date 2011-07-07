@@ -2,7 +2,7 @@ module Tango
   module Fetch
 
     def fetch(url)
-      shell("wget", "--progress=bar:force", "--continue", url)
+      shell("curl", "-O", "-C", "-", "--progress-bar", url)
     end
 
   end
