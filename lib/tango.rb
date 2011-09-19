@@ -1,5 +1,6 @@
 require 'tango/config_files'
 require 'tango/contexts'
+require 'tango/helpers'
 require 'tango/logger'
 require 'tango/runner'
 require 'tango/usage'

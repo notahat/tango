@@ -13,7 +13,8 @@ module Tango
     include Fetch
     include MetAndMeet
     include Shell
-    
+    include Helpers::FileManipulationHelpers
+
     def self.step(step_name, &block)
       define_method(step_name) do |*args|
         description = step_description(step_name, args)
