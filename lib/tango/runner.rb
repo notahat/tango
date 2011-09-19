@@ -1,5 +1,6 @@
 require 'tango/config_files'
 require 'tango/contexts/helpers'
+require 'tango/helpers/file_manipulation_helpers'
 require 'tango/delegate'
 require 'tango/fetch'
 require 'tango/met_and_meet'

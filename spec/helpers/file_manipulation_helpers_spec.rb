@@ -5,6 +5,39 @@ module Tango::Helpers
     include FileManipulationHelpers
     include ::Tango::ConfigFiles
 
+    describe "#change_line" do
+
+      def file_contents
+        File.read(@filename)
+      end
+
+      before do
+        @filename = '/tmp/file_manipulation_helper_spec.txt'
+        File.open(@filename, 'w') do |f|
+          f.write <<-FILE
+anna
+bob
+curtis
+donald
+          FILE
+        end
+      end
+
+      it 'should replace the line matching the regex with the specified line' do
+        expect {
+          change_line(/^bob/, "jimbo", @filename)
+        }.to change {
+          #ignore comment
+          file_contents.gsub /#.*\n/, ''
+        }.to(<<-FILE)
+anna
+jimbo
+curtis
+donald
+FILE
+      end
+    end
+
     describe "#insert_into_file" do
       def file_contents
         File.read(@filename)
@@ -18,13 +51,13 @@ a
 b
 c
 d
-FILE
+          FILE
         end
       end
 
       it 'should insert a comment above the inserted line' do
-          insert_into_file('c', @filename, "z\n")
-          file_contents.should =~ /# Envato config added.*\nz\n/
+        insert_into_file('c', @filename, "z\n")
+        file_contents.should =~ /# Envato config added.*\nz\n/
       end
 
       it 'should insert text before the specified place' do
@@ -39,7 +72,7 @@ b
 z
 c
 d
-FILE
+        FILE
       end
     end
 
@@ -79,7 +112,7 @@ FILE
           f.write <<-FILE
 AwesomeStuff false
 NotAwesomeStuff true
-FILE
+          FILE
         end
       end
 
@@ -91,7 +124,7 @@ FILE
         }.to(<<-FILE)
 NotAwesomeStuff true
 AwesomeStuff true
-FILE
+        FILE
       end
 
       it "should add the correct setting if it is unconfigured" do
@@ -103,7 +136,7 @@ FILE
 AwesomeStuff false
 NotAwesomeStuff true
 OtherAwesomeStuff true
-FILE
+        FILE
       end
       it "should leave the correct setting alone" do
         expect {
