@@ -43,6 +43,10 @@ module Tango
         end
       end
 
+      def grep(pattern, file)
+        !!(File.read(file) =~ pattern)
+      end
+
       # for files where attributes are specified:
       # attribute_name value
       def change_config_attribute(keyword, from, to, file)

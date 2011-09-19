@@ -5,6 +5,27 @@ module Tango::Helpers
     include FileManipulationHelpers
     include ::Tango::ConfigFiles
 
+    describe "#grep" do
+      before do
+        @filename = '/tmp/file_manipulation_helper_spec.txt'
+        File.open(@filename, 'w') do |f|
+          f.write <<-FILE
+anna
+bob
+curtis
+donald
+          FILE
+        end
+      end
+
+      it 'should return true if the pattern matches' do
+        grep(/bob/, @filename).should be_true
+      end
+      it 'should return false if the pattern doesnt match' do
+        grep(/robert/, @filename).should be_false
+      end
+    end
+
     describe "#change_line" do
 
       def file_contents
