@@ -23,7 +23,7 @@ module Tango
       result = @stub_class.new.shell("test", "a", "=", "b")
       result.status.should == 1
       result.succeeded?.should be_false
-      result.failed?.should be_true 
+      result.failed?.should be_true
     end
 
     it "should accept commands as a single argument" do
@@ -51,6 +51,12 @@ module Tango
       @stub.should_not_receive(:log_raw)
 
       @stub.shell("echo", "Hello, world!", :echo => false).output.should == "Hello, world!\n"
+    end
+
+    it "should export envionment variables" do
+      @stub = @stub_class.new
+
+      @stub.shell("env", :env_vars => {'SOMETHING' => 'some_value'}).output.should include('SOMETHING=some_value')
     end
 
     context "shell! method" do

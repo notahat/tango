@@ -4,12 +4,12 @@ module Tango
   module Shell
 
     def shell(command, *args)
-      options = { :echo => true }
+      options = { :echo => true, :env_vars => {} }
       options.merge!(args.pop) if args.last.is_a?(Hash)
 
       log "% #{command} #{args.join(' ')}\n\n" if options[:echo]
 
-      pid, pipe = fork_and_exec(command, *args)
+      pid, pipe = fork_and_exec(command, options[:env_vars], *args)
       output    = collect_output(pipe, options[:echo])
       Process.waitpid(pid)
       pipe.close
@@ -32,12 +32,13 @@ module Tango
 
   private
 
-    def fork_and_exec(command, *args)
+    def fork_and_exec(command, env_vars, *args)
       read_end, write_end = IO.pipe
       pid = fork do
         read_end.close
         STDOUT.reopen(write_end)
         STDERR.reopen(write_end)
+        env_vars.each { |key, value| ENV[key] = value }
         exec(command, *args)
       end
       write_end.close
