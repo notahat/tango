@@ -1,3 +1,5 @@
+# coding: utf-8
+
 module Tango
   class Logger
     def self.instance
