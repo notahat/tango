@@ -111,7 +111,7 @@ Use shell! to raise an exception if the command exits with non-zero status.
 ### Fetching a Remote URL
 
     step :install do
-      cd "/tmp" do
+      in_directory "/tmp" do
         fetch "http://example.com/something.tar.gz"
       end
     end
