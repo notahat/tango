@@ -18,6 +18,9 @@ module Tango
         in_context(User.new(umask), &block)
       end
 
+      def home_dir
+        Etc.getpwuid(Process.euid).dir
+      end
     end
   end
 end
