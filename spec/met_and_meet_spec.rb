@@ -3,19 +3,19 @@ require 'tango'
 module Tango
   describe MetAndMeet do
 
-    before do
-      @stub = Class.new do
+    let(:runner) do
+      Class.new do
         include MetAndMeet
-
-        def log(message); end
-      end
+      end.new
     end
+
+    before { runner.stub(:log => nil) }
 
     it "should check the met?, run the meet, then check the met? again" do
       met_block_calls  = 0
       meet_block_calls = 0
 
-      @stub.new.instance_eval do
+      runner.instance_eval do
         met? do
           met_block_calls += 1
           meet_block_calls > 0
@@ -31,7 +31,7 @@ module Tango
       met_block_calls  = 0
       meet_block_calls = 0
 
-      @stub.new.instance_eval do
+      runner.instance_eval do
         met? do
           met_block_calls += 1
           true
@@ -48,7 +48,7 @@ module Tango
       meet_block_calls = 0
 
       expect do
-        @stub.new.instance_eval do
+        runner.instance_eval do
           met? do
             met_block_calls += 1
             false
@@ -63,7 +63,7 @@ module Tango
 
     it "should raise an error if there's a meet block without a met block" do
       expect do
-        @stub.new.instance_eval do
+        runner.instance_eval do
           meet { }
         end
       end.should raise_error(MeetWithoutMetError)
@@ -89,6 +89,52 @@ module Tango
       expect { klass.new.a }.should raise_error(CouldNotMeetError)
     end
 
+    describe 'met! with meet' do
+      it 'raise an error if a met! block is met before meet is called' do
+        expect do
+          runner.instance_eval do
+            met! { true }
+            meet { }
+          end
+        end.should raise_error(MustNotMeetError)
+      end
+
+      it 'does not raise an error if a met! block is met after meet is called' do
+        expect do
+          runner.instance_eval do
+            @met = false
+            met! { @met }
+            meet { @met = true }
+          end
+        end.should_not raise_error(MustNotMeetError)
+      end
+
+      it 'raises an error if the met! block is not met after meet is called' do
+        expect do
+          runner.instance_eval do
+            met! { false }
+            meet {  }
+          end
+        end.should raise_error(CouldNotMeetError)
+      end
+
+      it 'logs that the met! has not already been met' do
+        runner.should_receive(:log).with('not already met.')
+        runner.instance_eval do
+          @met = false
+          met! { @met }
+          meet { @met = true }
+        end
+      end
+
+      it 'logs when the block is met' do
+        runner.should_receive(:log).with('met.')
+        runner.instance_eval do
+          @met = false
+          met! { @met }
+          meet { @met = true }
+        end
+      end
+    end
   end
 end
-
