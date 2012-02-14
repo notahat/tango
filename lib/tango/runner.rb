@@ -20,9 +20,15 @@ module Tango
       define_method(step_name) do |*args|
         description = step_description(step_name, args)
 
-        logger.enter(description)
-        result = instance_exec(*args, &block)
-        logger.leave(description)
+        logger.begin_step(description)
+        begin
+          result = instance_exec(*args, &block)
+        rescue StandardError
+          logger.step_not_met(description)
+          raise
+        else
+          logger.step_met(description)
+        end
 
         result
       end
