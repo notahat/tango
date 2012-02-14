@@ -1,9 +1,11 @@
 require 'tango'
 
 class StubbedLogger
-  def enter(name); end
-  def leave(name); end
+  def begin_step(name); end
+  def step_not_met(name); end
+  def step_met(name); end
   def log(message); end
+
 end
 
 class StubbedRunner < Tango::Runner

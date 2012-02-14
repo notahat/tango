@@ -11,14 +11,19 @@ module Tango
       @depth = 0
     end
 
-    def enter(step_name)
+    def begin_step(step_name)
       log "#{step_name} {"
       @depth += 1
     end
 
-    def leave(step_name)
+    def step_met(step_name)
       @depth -= 1
       log "} √ #{step_name}"
+    end
+
+    def step_not_met(step_name)
+      @depth -= 1
+      log "} ✕ #{step_name}\n\n"
     end
 
     def log(message)
@@ -30,6 +35,7 @@ module Tango
     end
 
   private
+
 
     def indent
       "  " * @depth
