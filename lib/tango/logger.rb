@@ -49,7 +49,6 @@ module Tango
 
   private
 
-
     def indent
       "  " * @depth
     end

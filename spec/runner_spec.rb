@@ -5,7 +5,6 @@ class StubbedLogger
   def step_not_met(name); end
   def step_met(name); end
   def log(message); end
-
 end
 
 class StubbedRunner < Tango::Runner
