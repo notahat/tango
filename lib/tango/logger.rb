@@ -2,6 +2,8 @@
 
 module Tango
   class Logger
+    attr_reader :depth
+
     def self.instance
       @logger ||= Logger.new
     end

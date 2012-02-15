@@ -89,6 +89,14 @@ module Tango
       expect { klass.new.a }.should raise_error(CouldNotMeetError)
     end
 
+    it 'starts the progress bar if the :progress option is true' do
+      runner = @stub.new
+      ProgressBar.should_receive(:show).with(runner).and_yield
+      runner.instance_eval do
+        met? { @met }
+        meet(:progress => true) { @met = true }
+      end
+    end
   end
 end
 

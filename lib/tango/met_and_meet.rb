@@ -8,7 +8,7 @@ module Tango
       @met_block = met_block
     end
 
-    def meet(&meet_block)
+    def meet(options = {}, &meet_block)
       # Cache the met block in case something inside the meet
       # block calls another step with another met block:
       met_block = @met_block
@@ -19,7 +19,13 @@ module Tango
         log "already met."
       else
         log "not already met."
-        instance_eval(&meet_block)
+
+        if options[:progress]
+          ProgressBar.show(self) { instance_eval(&meet_block) }
+        else
+          instance_eval(&meet_block)
+        end
+
         if instance_eval(&met_block)
           log "met."
         else
@@ -27,6 +33,5 @@ module Tango
         end
       end
     end
-
   end
 end

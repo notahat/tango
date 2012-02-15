@@ -4,6 +4,7 @@ require 'tango/helpers/file_manipulation_helpers'
 require 'tango/delegate'
 require 'tango/fetch'
 require 'tango/met_and_meet'
+require 'tango/progress_bar'
 require 'tango/shell'
 
 module Tango
