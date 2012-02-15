@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'tango'
 require 'stringio'
 
@@ -26,5 +28,9 @@ module Tango
       @io.string.should == "outer step {\n  inner step {\n"
     end
 
+    it 'exposes the depth' do
+      @logger.enter("outer step")
+      @logger.depth.should == 1
+    end
   end
 end
