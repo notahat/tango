@@ -16,7 +16,18 @@ module Tango
     include Shell
     include Helpers::FileManipulationHelpers
 
+    def self.steps
+      @steps ||= []
+    end
+
+    def self.perform(*args)
+      runner = new(*args)
+      steps.each { |step| runner.send(step) }
+      runner
+    end
+
     def self.step(step_name, &block)
+      steps << step_name
       define_method(step_name) do |*args|
         description = step_description(step_name, args)
 
