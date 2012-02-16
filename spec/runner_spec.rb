@@ -73,5 +73,34 @@ module Tango
       end
     end
 
+    describe 'perform' do
+      class PerformRunner < StubbedRunner
+        def history
+          @history ||= []
+        end
+
+        step :first do
+          history << :first
+        end
+
+        step :last do
+          history << :last
+        end
+      end
+
+      it 'passes the args to the constructor' do
+        arg = stub
+        runner = PerformRunner.new
+        PerformRunner.should_receive(:new).with(arg).and_return(runner)
+        PerformRunner.perform(arg)
+      end
+
+      it 'performs steps in the order they were defined' do
+        runner = PerformRunner.new
+        PerformRunner.stub(:new => runner)
+        PerformRunner.perform
+        runner.history.should == [:first, :last]
+      end
+    end
   end
 end
