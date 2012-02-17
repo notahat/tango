@@ -36,12 +36,12 @@ module Tango
 
     def fork_and_exec(command, env_vars, *args)
       read_end, write_end = IO.pipe
-      pid = fork do
+      pid = Kernel.fork do
         read_end.close
         STDOUT.reopen(write_end)
         STDERR.reopen(write_end)
         env_vars.each { |key, value| ENV[key] = value }
-        exec(command, *args)
+        Kernel.exec(command, *args)
       end
       write_end.close
 
