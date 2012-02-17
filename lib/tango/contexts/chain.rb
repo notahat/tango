@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'tango/contexts/helpers'
 
 module Tango
@@ -5,7 +7,7 @@ module Tango
     class Chain
 
       include Helpers
-    
+
       def initialize
         @contexts = []
       end

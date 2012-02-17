@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'tango'
 
 module Tango::Contexts
@@ -13,7 +15,7 @@ module Tango::Contexts
           @in_context = false
         end
 
-        def enter 
+        def enter
           @in_context = true
         end
 

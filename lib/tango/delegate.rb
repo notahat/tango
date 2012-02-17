@@ -1,6 +1,8 @@
+# coding: utf-8
+
 module Tango
   module Delegate
-    
+
     def self.included(base)
       base.extend(ClassMethods)
     end

@@ -1,8 +1,10 @@
+# coding: utf-8
+
 require 'tango'
 
 module Tango::Contexts
   describe Directory do
-    
+
     before do
       stub_class = Class.new do
         include Helpers

@@ -1,3 +1,5 @@
+# coding: utf-8
+
 require 'tango/config_files'
 require 'tango/contexts/helpers'
 require 'tango/helpers/file_manipulation_helpers'
