@@ -13,7 +13,7 @@ module Tango::Contexts
           @in_context = false
         end
 
-        def enter 
+        def enter
           @in_context = true
         end
 
@@ -52,6 +52,17 @@ module Tango::Contexts
         Chain.new.in_context(@context) { raise "Uh oh" }
       }.should raise_error("Uh oh")
       @context.should_not be_in_context
+    end
+
+    it 'adds the context into the list of current contexts' do
+      Chain.new.in_context(@context) do
+        Tango::Contexts.current.include?(@context).should be_true
+      end
+    end
+
+    it 'removes the context from the list of current contexts' do
+      Chain.new.in_context(@context) { }
+      Tango::Contexts.current.include?(@context).should be_false
     end
 
     describe "when chaining contexts" do

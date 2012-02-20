@@ -1,6 +1,7 @@
 module Tango
   module Contexts
     class Directory
+      attr_reader :directory
 
       def initialize(directory)
         @directory = directory

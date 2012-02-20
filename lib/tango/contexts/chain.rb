@@ -5,7 +5,7 @@ module Tango
     class Chain
 
       include Helpers
-    
+
       def initialize
         @contexts = []
       end
@@ -22,11 +22,18 @@ module Tango
     private
 
       def call_in_contexts
-        @contexts.each {|context| context.enter }
         begin
+          @contexts.each do |context|
+            Contexts.current.push(context)
+            context.enter
+          end
+
           yield
         ensure
-          @contexts.reverse.each {|context| context.leave }
+          @contexts.size.times do
+            context = Contexts.current.pop
+            context.leave if context
+          end
         end
       end
 

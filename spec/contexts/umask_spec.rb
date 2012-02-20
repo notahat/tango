@@ -29,5 +29,8 @@ module Tango::Contexts
       File.umask.should == old_umask
     end
 
+    it 'exposes the umask' do
+      Umask.new(0644).umask.should == 0644
+    end
   end
 end

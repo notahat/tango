@@ -2,7 +2,7 @@ require 'tango'
 
 module Tango::Contexts
   describe Directory do
-    
+
     before do
       stub_class = Class.new do
         include Helpers
@@ -31,6 +31,9 @@ module Tango::Contexts
       Dir.getwd.should == old_directory
     end
 
+    it 'exposes the directory' do
+      Directory.new('/foo').directory.should == '/foo'
+    end
   end
 end
 

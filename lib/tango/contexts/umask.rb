@@ -1,6 +1,7 @@
 module Tango
   module Contexts
     class Umask
+      attr_reader :umask
 
       def initialize(umask)
         @umask = umask
