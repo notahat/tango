@@ -2,7 +2,8 @@
 
 module Tango
   module TermANSIColorStubs
-    [:red, :green, :yellow].each do |color|
+    ALLOWED_COLOURS = [:red, :green, :yellow]
+    ALLOWED_COLOURS.each do |color|
       define_method(color) { |str| str }
     end
   end
@@ -39,8 +40,13 @@ module Tango
       log "} #{red("✕ #{step_name}")}\n\n"
     end
 
-    def log(message)
-      @io.puts "#{indent}#{message}"
+    def log(message, colour = nil)
+      if colour && ALLOWED_COLOURS.include?(colour)
+        @io.puts send(colour,"#{indent}#{message}")
+
+      else
+        @io.puts "#{indent}#{message}"
+      end
     end
 
     def log_raw(message)

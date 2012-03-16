@@ -33,5 +33,21 @@ module Tango
       @logger.begin_step("inner step")
       @io.string.should == "outer step {\n  inner step {\n"
     end
+
+    it "should accept a few colours" do
+      @logger.should_receive(:red)
+      @logger.log("hello", :red)
+
+      @logger.should_receive(:yellow)
+      @logger.log("hello", :yellow)
+
+      @logger.should_receive(:green)
+      @logger.log("hello", :green)
+    end
+
+    it "should ignore other colours" do
+      @logger.should_not_receive(:brown)
+      @logger.log("hello", :brown)
+    end
   end
 end
