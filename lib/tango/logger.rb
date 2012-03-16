@@ -2,7 +2,7 @@
 
 module Tango
   module TermANSIColorStubs
-    ALLOWED_COLOURS = [:red, :green, :yellow]
+    ALLOWED_COLOURS = [:red, :green, :yellow, :blue, :cyan, :magenta]
     ALLOWED_COLOURS.each do |color|
       define_method(color) { |str| str }
     end
