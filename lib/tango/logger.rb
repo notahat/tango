@@ -41,7 +41,7 @@ module Tango
     end
 
     def log(message, colour = nil)
-      if colour && ALLOWED_COLOURS.include?(colour)
+      if colour && ::Tango::TermANSIColorStubs::ALLOWED_COLOURS.include?(colour)
         @io.puts send(colour,"#{indent}#{message}")
 
       else
