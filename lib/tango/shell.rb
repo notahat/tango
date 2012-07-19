@@ -37,6 +37,12 @@ module Tango
     def fork_and_exec(command, env_vars, *args)
       read_end, write_end = IO.pipe
       pid = Kernel.fork do
+        # set the actual user ID to be the effective user ID of the parent
+        # we need to do this, because Ruby scripts called via a process with a different uid and euid will barf.
+        # This is an issue if we've already set the euid to something different.
+        # Do it after we've forked, as we can't change it back if we do it in the main parent process
+        Process::Sys.setuid(Process::Sys.geteuid)
+        
         read_end.close
         STDOUT.reopen(write_end)
         STDERR.reopen(write_end)
