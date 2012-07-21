@@ -91,6 +91,43 @@ module Tango
       expect { klass.new.a }.should raise_error(CouldNotMeetError)
     end
 
+    context "with TANGO_DRY_RUN set" do
+      before do
+        ENV['TANGO_DRY_RUN'] = 'true'
+      end
+
+      it "should not execute meet blocks if met passes" do
+        met_block_calls  = 0
+        meet_block_calls = 0
+
+        @stub.new.instance_eval do
+          met? do
+            met_block_calls += 1
+            true
+          end
+          meet { meet_block_calls += 1 }
+        end
+
+        met_block_calls.should  == 1
+        meet_block_calls.should == 0
+      end
+
+      it "should not execute meet blocks if met fails" do
+        met_block_calls  = 0
+        meet_block_calls = 0
+
+        @stub.new.instance_eval do
+          met? do
+            met_block_calls += 1
+            false
+          end
+          meet { meet_block_calls += 1 }
+        end
+
+        met_block_calls.should  == 1
+        meet_block_calls.should == 0
+      end
+    end
   end
 end
 
